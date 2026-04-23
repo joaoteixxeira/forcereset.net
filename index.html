@@ -24,41 +24,83 @@
       overflow-x: hidden;
     }
 
-    /* ── TICKER ── */
-    .ticker {
+    /* ── NAV ── */
+    nav {
       position: fixed;
       top: 0; left: 0; right: 0;
       z-index: 100;
       background: var(--black);
       border-bottom: 1px solid #222;
-      height: 36px;
-      overflow: hidden;
-    }
-
-    .ticker-track {
+      height: 56px;
       display: flex;
       align-items: center;
-      height: 100%;
-      gap: 0;
-      animation: ticker-scroll 30s linear infinite;
-      white-space: nowrap;
+      justify-content: space-between;
+      padding: 0 2.5rem;
     }
 
-    .ticker-item {
+    .nav-logo {
+      font-family: 'Bangers', cursive;
+      font-size: 1.5rem;
+      letter-spacing: 0.06em;
+      color: var(--yellow);
+      text-decoration: none;
+      text-shadow: 1px 1px 0 var(--black), 2px 2px 0 var(--black);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
       font-family: 'Space Mono', monospace;
-      font-size: 0.65rem;
-      letter-spacing: 0.12em;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
       color: var(--gray-light);
-      padding: 0 2rem;
-      border-right: 1px solid #333;
+      text-decoration: none;
+      transition: color 0.2s;
     }
 
-    .ticker-item:nth-child(odd) { color: var(--yellow); }
+    .nav-links a:hover { color: var(--yellow); }
 
-    @keyframes ticker-scroll {
-      from { transform: translateX(0); }
-      to   { transform: translateX(-50%); }
+    .nav-cta {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: var(--yellow);
+      color: var(--black);
+      border: none;
+      padding: 0.45rem 1rem;
+      cursor: pointer;
+      font-weight: 700;
+      transition: opacity 0.2s;
+    }
+
+    .nav-cta:hover { opacity: 0.85; }
+
+    /* ── HAMBURGER (mobile) ── */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+
+    .nav-hamburger span {
+      display: block;
+      width: 22px; height: 2px;
+      background: var(--gray-light);
+    }
+
+    @media (max-width: 720px) {
+      .nav-links, .nav-cta { display: none; }
+      .nav-hamburger { display: flex; }
     }
 
     /* ── MAIN LAYOUT ── */
@@ -66,7 +108,7 @@
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      padding-top: 36px;
+      padding-top: 56px;
     }
 
     /* ── YELLOW BANNER ── */
@@ -329,25 +371,21 @@
 </head>
 <body>
 
-  <!-- TICKER -->
-  <div class="ticker">
-    <div class="ticker-track">
-      <span class="ticker-item">Privacy by default</span>
-      <span class="ticker-item">No sponsored bias</span>
-      <span class="ticker-item">Hardware that lasts</span>
-      <span class="ticker-item">Block everything</span>
-      <span class="ticker-item">Advanced user level</span>
-      <span class="ticker-item">Honest reviews</span>
-      <span class="ticker-item">Open source first</span>
-      <span class="ticker-item">Privacy by default</span>
-      <span class="ticker-item">No sponsored bias</span>
-      <span class="ticker-item">Hardware that lasts</span>
-      <span class="ticker-item">Block everything</span>
-      <span class="ticker-item">Advanced user level</span>
-      <span class="ticker-item">Honest reviews</span>
-      <span class="ticker-item">Open source first</span>
-    </div>
-  </div>
+  <!-- NAV -->
+  <nav>
+    <a class="nav-logo" href="#">FR/</a>
+    <ul class="nav-links">
+      <li><a href="#">Privacy</a></li>
+      <li><a href="#">Hardware</a></li>
+      <li><a href="#">Reviews</a></li>
+      <li><a href="#">Tutorials</a></li>
+      <li><a href="#">About</a></li>
+    </ul>
+    <button class="nav-cta">Subscribe</button>
+    <button class="nav-hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
 
   <main>
 
