@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ForceReset.net — Coming Soon</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=DM+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --yellow: #FFE500;
+      --black: #0A0A0A;
+      --white: #FAFAFA;
+      --gray-light: #888;
+      --accent: #FF3B00;
+    }
+
+    html, body {
+      height: 100%;
+      background: var(--black);
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ── TICKER ── */
+    .ticker {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: var(--black);
+      border-bottom: 1px solid #222;
+      height: 36px;
+      overflow: hidden;
+    }
+
+    .ticker-track {
+      display: flex;
+      align-items: center;
+      height: 100%;
+      gap: 0;
+      animation: ticker-scroll 30s linear infinite;
+      white-space: nowrap;
+    }
+
+    .ticker-item {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gray-light);
+      padding: 0 2rem;
+      border-right: 1px solid #333;
+    }
+
+    .ticker-item:nth-child(odd) { color: var(--yellow); }
+
+    @keyframes ticker-scroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ── MAIN LAYOUT ── */
+    main {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding-top: 36px;
+    }
+
+    /* ── YELLOW BANNER ── */
+    .banner {
+      background: var(--yellow);
+      padding: 3.5rem 2.5rem 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .banner::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 18px,
+        rgba(0,0,0,0.04) 18px,
+        rgba(0,0,0,0.04) 20px
+      );
+      pointer-events: none;
+    }
+
+    .banner-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .banner-eyebrow {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(0,0,0,0.5);
+      margin-bottom: 0.75rem;
+    }
+
+    .banner-title {
+      font-family: 'Bangers', cursive;
+      font-size: clamp(5rem, 14vw, 11rem);
+      line-height: 0.88;
+      color: var(--black);
+      letter-spacing: 0.03em;
+      text-shadow:
+        3px 3px 0 rgba(0,0,0,0.15),
+        6px 6px 0 rgba(0,0,0,0.07);
+      animation: pop-in 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    }
+
+    .title-dot {
+      color: var(--accent);
+    }
+
+    @keyframes pop-in {
+      from { transform: scale(0.85); opacity: 0; }
+      to   { transform: scale(1);    opacity: 1; }
+    }
+
+    /* ── CONTENT SECTION ── */
+    .content {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      padding: 5rem 2.5rem;
+    }
+
+    .content-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .content-left {}
+
+    .label {
+      display: inline-block;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--yellow);
+      border: 1px solid var(--yellow);
+      padding: 0.25rem 0.6rem;
+      margin-bottom: 1.75rem;
+    }
+
+    h2 {
+      font-family: 'Bangers', cursive;
+      font-size: clamp(2.2rem, 5vw, 3.5rem);
+      letter-spacing: 0.04em;
+      line-height: 1;
+      color: var(--white);
+      margin-bottom: 1.5rem;
+    }
+
+    h2 span {
+      color: var(--yellow);
+    }
+
+    .body-text {
+      font-size: 1rem;
+      line-height: 1.7;
+      color: #aaa;
+      max-width: 38ch;
+    }
+
+    .body-text strong {
+      color: var(--white);
+      font-weight: 600;
+    }
+
+    /* ── STATUS CARD ── */
+    .status-card {
+      border: 1px solid #222;
+      padding: 2rem;
+      position: relative;
+      animation: fade-up 0.8s 0.3s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    .status-card::before {
+      content: '';
+      position: absolute;
+      top: -1px; left: 2rem;
+      width: 3rem; height: 2px;
+      background: var(--yellow);
+    }
+
+    @keyframes fade-up {
+      from { transform: translateY(20px); opacity: 0; }
+      to   { transform: translateY(0);    opacity: 1; }
+    }
+
+    .status-header {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .status-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.5; transform: scale(0.7); }
+    }
+
+    .status-title {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gray-light);
+    }
+
+    .status-items {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .status-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.875rem;
+      color: #888;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid #1a1a1a;
+    }
+
+    .status-item:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .status-item span:first-child {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+    }
+
+    .badge {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.5rem;
+    }
+
+    .badge-done { color: #4ade80; border: 1px solid #4ade8044; }
+    .badge-wip  { color: var(--yellow); border: 1px solid #FFE50044; }
+    .badge-soon { color: #888; border: 1px solid #444; }
+
+    .launch-eta {
+      margin-top: 1.75rem;
+      padding-top: 1.75rem;
+      border-top: 1px solid #222;
+      display: flex;
+      align-items: baseline;
+      gap: 0.75rem;
+    }
+
+    .eta-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gray-light);
+    }
+
+    .eta-date {
+      font-family: 'Bangers', cursive;
+      font-size: 1.4rem;
+      letter-spacing: 0.05em;
+      color: var(--yellow);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid #1a1a1a;
+      padding: 1.5rem 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-logo {
+      font-family: 'Bangers', cursive;
+      font-size: 1.1rem;
+      letter-spacing: 0.06em;
+      color: var(--yellow);
+    }
+
+    .footer-note {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.08em;
+      color: #444;
+      text-transform: uppercase;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 720px) {
+      .content-inner { grid-template-columns: 1fr; gap: 3rem; }
+      .banner { padding: 2.5rem 1.5rem 2rem; }
+      .content { padding: 3rem 1.5rem; }
+      footer { padding: 1.5rem; flex-direction: column; gap: 0.5rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TICKER -->
+  <div class="ticker">
+    <div class="ticker-track">
+      <span class="ticker-item">Privacy by default</span>
+      <span class="ticker-item">No sponsored bias</span>
+      <span class="ticker-item">Hardware that lasts</span>
+      <span class="ticker-item">Block everything</span>
+      <span class="ticker-item">Advanced user level</span>
+      <span class="ticker-item">Honest reviews</span>
+      <span class="ticker-item">Open source first</span>
+      <span class="ticker-item">Privacy by default</span>
+      <span class="ticker-item">No sponsored bias</span>
+      <span class="ticker-item">Hardware that lasts</span>
+      <span class="ticker-item">Block everything</span>
+      <span class="ticker-item">Advanced user level</span>
+      <span class="ticker-item">Honest reviews</span>
+      <span class="ticker-item">Open source first</span>
+    </div>
+  </div>
+
+  <main>
+
+    <!-- YELLOW BANNER -->
+    <section class="banner">
+      <div class="banner-inner">
+        <p class="banner-eyebrow">forcereset.net</p>
+        <h1 class="banner-title">FORCE<br>RESET<span class="title-dot">.</span></h1>
+      </div>
+    </section>
+
+    <!-- CONTENT -->
+    <section class="content">
+      <div class="content-inner">
+
+        <div class="content-left">
+          <div class="label">Coming Soon</div>
+          <h2>Take back<br>control of your<br><span>digital life.</span></h2>
+          <p class="body-text">
+            ForceReset is a resource for <strong>privacy tools, honest hardware reviews, and practical tech advice</strong> — 
+            written for advanced users who go beyond the defaults. No sponsored content, no fluff. 
+            Just real-world knowledge from someone who has been down every rabbit hole so you don't have to.
+          </p>
+        </div>
+
+        <div class="status-card">
+          <div class="status-header">
+            <div class="status-dot"></div>
+            <span class="status-title">Site status</span>
+          </div>
+          <ul class="status-items">
+            <li class="status-item">
+              <span>Domain & DNS</span>
+              <span class="badge badge-done">✓ Done</span>
+            </li>
+            <li class="status-item">
+              <span>Hosting setup</span>
+              <span class="badge badge-wip">In progress</span>
+            </li>
+            <li class="status-item">
+              <span>Content</span>
+              <span class="badge badge-soon">Soon</span>
+            </li>
+            <li class="status-item">
+              <span>Full launch</span>
+              <span class="badge badge-soon">Soon</span>
+            </li>
+          </ul>
+          <div class="launch-eta">
+            <span class="eta-label">Est. launch</span>
+            <span class="eta-date">April 27, 2026</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <span class="footer-logo">FR/</span>
+    <span class="footer-note">forcereset.net &mdash; &copy; 2026</span>
+  </footer>
+
+</body>
+</html>
